@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
-import { Form, Button, Col, Row } from 'react-bootstrap';
-import {Editor, EditorState} from 'draft-js';
+import { Form, Button, Col } from 'react-bootstrap';
+import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 
 export const LogProblem = () => {
@@ -13,42 +13,26 @@ export const LogProblem = () => {
     const [date, setDate] = useState("")
     const [validated, setValidated] = useState(false);
 
-    // const onChangeTitle = event => {
-    //   setTitle(event.target.value)
-    // }
+    const onChangeTitle = event => {
+      setTitle(event.target.value)
+    }
 
-    // const onChangeNumber = event => {
-    //   setNumber(event.target.value)
-    // }
+    const onChangeNumber = event => {
+      setNumber(event.target.value)
+    }
 
-    // const onChangeDifficulty = event => {
-    //   setDifficulty(event.target.value)
-    // }
+    const onChangeDifficulty = event => {
+      setDifficulty(event.target.value)
+    }
 
-    // const onChangeTopics = event => {
-    //   setTopics(event.target.value)
-    // }
+    const onChangeTopics = event => {
+      console.log(event.target.value)
+      setTopics(event.target.value)
+    }
 
-    // const onChangeDate = event => {
-    //   setDate(date)
-    // }
-
-    // const onSubmit = event => {
-    //   // e.preventDefault();
-    
-    //   const problem = {
-    //     title: title,
-    //     number: number,
-    //     difficulty: difficulty,
-    //     topics: topics,
-    //     notes: notes,
-    //     date: date
-    //   };
-    
-    //   console.log(problem);
-      
-    //   window.location = '/';
-    // }
+    const onChangeDate = date => {
+      setDate(date)
+    }
 
     const handleSubmit = (event) => {
       const form = event.currentTarget;
@@ -56,8 +40,22 @@ export const LogProblem = () => {
         event.preventDefault();
         event.stopPropagation();
       }
-  
+
       setValidated(true);
+
+      const problem = {
+        title: title,
+        number: number,
+        difficulty: difficulty,
+        topics: topics,
+        notes: notes,
+        date: "2020-06-21"
+      };
+
+      axios.post("http://localhost:5000/problems/add", problem)
+        .then(res => console.log(res.data)); 
+      
+        // window.location = '/';
     };
   
     return (
@@ -65,18 +63,18 @@ export const LogProblem = () => {
         <Form.Row>
           <Form.Group as={Col} md="2" controlId="formGridNumber">
             <Form.Label>Number</Form.Label>
-            <Form.Control type="number" placeholder="No." required/>
+            <Form.Control type="number" placeholder="No." onChange={onChangeNumber} required/>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridTitle">
             <Form.Label>Title</Form.Label>
-            <Form.Control type="text" placeholder="Enter title" required/>
+            <Form.Control type="text" placeholder="Enter title" onChange={onChangeTitle} required/>
           </Form.Group>
         </Form.Row>
 
         <Form.Group controlId="formGridDifficulty">
             <Form.Label>Difficulty</Form.Label>
-            <Form.Control required as="select" defaultValue="Choose...">
+            <Form.Control required as="select" defaultValue="Choose..." onChange={onChangeDifficulty}>
               <option>Choose...</option>
               <option>Easy</option>
               <option>Medium</option>
@@ -86,14 +84,19 @@ export const LogProblem = () => {
 
         <Form.Group controlId="formGridTopics">
           <Form.Label>Topics</Form.Label>
-          <Form.Control as="select" multiple>
+          <Form.Control as="select" multiple onChange={onChangeTopics}>
             <option>Arrays</option>
             <option>HashTables</option>
             <option>Dynamic Programming</option>
             <option>Strings</option>
           </Form.Control>
         </Form.Group>
-  
+
+        <Form.Group controlId="formGridDate">
+          <Form.Label>Date &nbsp;</Form.Label>
+          <DatePicker onChange={onChangeDate} selected={new Date()}/>
+        </Form.Group>
+
         <Button variant="primary" type="submit">
           Submit
         </Button>
