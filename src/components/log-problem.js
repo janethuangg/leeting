@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { Form, Button, Col, Row } from 'react-bootstrap';
+import MyEditor from './Editor';
 import "react-datepicker/dist/react-datepicker.css";
 
 export const LogProblem = () => {
@@ -33,6 +35,43 @@ export const LogProblem = () => {
     const onChangeDate = date => {
       setDate(date)
     }
+
+    // const onChangeTitle = event => {
+    //   setTitle(event.target.value)
+    // }
+
+    // const onChangeNumber = event => {
+    //   setNumber(event.target.value)
+    // }
+
+    // const onChangeDifficulty = event => {
+    //   setDifficulty(event.target.value)
+    // }
+
+    // const onChangeTopics = event => {
+    //   setTopics(event.target.value)
+    // }
+
+    // const onChangeDate = event => {
+    //   setDate(date)
+    // }
+
+    // const onSubmit = event => {
+    //   // e.preventDefault();
+    
+    //   const problem = {
+    //     title: title,
+    //     number: number,
+    //     difficulty: difficulty,
+    //     topics: topics,
+    //     notes: notes,
+    //     date: date
+    //   };
+    
+    //   console.log(problem);
+      
+    //   window.location = '/';
+    // }
 
     const handleSubmit = (event) => {
       const form = event.currentTarget;
@@ -95,6 +134,10 @@ export const LogProblem = () => {
         <Form.Group controlId="formGridDate">
           <Form.Label>Date &nbsp;</Form.Label>
           <DatePicker onChange={onChangeDate} selected={new Date()}/>
+        
+        <Form.Group controlId='formGridNotes'>
+            <Form.Label>Notes</Form.Label>
+            <MyEditor />
         </Form.Group>
 
         <Button variant="primary" type="submit">
