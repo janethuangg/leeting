@@ -25,6 +25,7 @@ function keyBindingFunction(event) {
 class MyEditor extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       editorState: EditorState.createEmpty()
     };
@@ -36,6 +37,7 @@ class MyEditor extends React.Component {
   }
 
   onChange (editorState) {
+    this.props.handleChange({editorState})
     this.setState({editorState});
   }
 

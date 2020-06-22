@@ -1,40 +1,21 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ProblemList from './ProblemList';
+import axios from 'axios';
 
-class Home extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            problems: [
-                {
-                    number: 1,
-                    title: "two sum",
-                    difficulty: "easy",
-                    topics: "two pointer",
-                    notes: "asdf asdf asdf asdf a;alskdfja;sldk asdf;lkajsad;lkfa asdfasdfasdfafasdasfdasasfdasasdfasdfasfasdfasdfasasdfasdfasdasdfasdfasdfasdfasdasdfasdfffd",
-                    date: "1/2/2020"
-                },
+const Home = (props) => {
+    const [problems, setProblems] = useState([])
 
-                {
-                    number: 1,
-                    title: "two sum",
-                    difficulty: "easy",
-                    topics: "two pointer",
-                    notes: "gg",
-                    date: "1/2/2020"
-                }
-            ]
-        }
-    }
-
-    render() {
-        return (
-            <div className='tc'>
-            <h1>Problems </h1>
-            <ProblemList problems={this.state.problems}/>
-            </div>
-        )
-    }
+    useEffect(() => {
+        axios.get("http://localhost:5000/problems")
+            .then(res => setProblems(res.data)); 
+    },[])
+    
+    return (
+        <div className='tc'>
+        <h1>Problems</h1>
+        <ProblemList problems={problems}/>
+        </div>
+    )
 }
 
 export default Home;

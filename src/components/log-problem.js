@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 import { Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import MyEditor from './Editor';
-import "react-datepicker/dist/react-datepicker.css";
 
 export const LogProblem = () => {
     const [title, setTitle] = useState("")
@@ -35,42 +34,9 @@ export const LogProblem = () => {
       setDate(date)
     }
 
-    // const onChangeTitle = event => {
-    //   setTitle(event.target.value)
-    // }
-
-    // const onChangeNumber = event => {
-    //   setNumber(event.target.value)
-    // }
-
-    // const onChangeDifficulty = event => {
-    //   setDifficulty(event.target.value)
-    // }
-
-    // const onChangeTopics = event => {
-    //   setTopics(event.target.value)
-    // }
-
-    // const onChangeDate = event => {
-    //   setDate(date)
-    // }
-
-    // const onSubmit = event => {
-    //   // e.preventDefault();
-    
-    //   const problem = {
-    //     title: title,
-    //     number: number,
-    //     difficulty: difficulty,
-    //     topics: topics,
-    //     notes: notes,
-    //     date: date
-    //   };
-    
-    //   console.log(problem);
-      
-    //   window.location = '/';
-    // }
+    const onChangeNotes = notes => {
+      console.log(notes)
+    }
 
     const handleSubmit = (event) => {
       const form = event.currentTarget;
@@ -87,7 +53,7 @@ export const LogProblem = () => {
         difficulty: difficulty,
         topics: topics,
         notes: notes,
-        date: "2020-06-21"
+        date: date
       };
 
       axios.post("http://localhost:5000/problems/add", problem)
@@ -121,7 +87,7 @@ export const LogProblem = () => {
         </Form.Group>
 
         <Form.Group controlId="formGridTopics">
-          <Form.Label>Topics</Form.Label>
+          <Form.Label>Topics (doesn't quite work)</Form.Label>
           <Form.Control as="select" multiple onChange={onChangeTopics}>
             <option>Arrays</option>
             <option>HashTables</option>
@@ -136,8 +102,8 @@ export const LogProblem = () => {
         </Form.Group>
         
         <Form.Group controlId='formGridNotes'>
-            <Form.Label>Notes</Form.Label>
-            <MyEditor />
+            <Form.Label>Notes (don't know how to store)</Form.Label>
+            <MyEditor handleChange={onChangeNotes}/>
         </Form.Group>
 
         <Button variant="primary" type="submit">
