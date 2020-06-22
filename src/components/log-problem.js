@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { Form, Button, Col, Row } from 'react-bootstrap';
 import MyEditor from './Editor';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -134,6 +133,7 @@ export const LogProblem = () => {
         <Form.Group controlId="formGridDate">
           <Form.Label>Date &nbsp;</Form.Label>
           <DatePicker onChange={onChangeDate} selected={new Date()}/>
+        </Form.Group>
         
         <Form.Group controlId='formGridNotes'>
             <Form.Label>Notes</Form.Label>
