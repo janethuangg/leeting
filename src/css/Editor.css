@@ -1,0 +1,20 @@
+.my-little-app {
+    width: 100%;
+}
+
+.draft-editor-wrapper {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.fontStyle {
+    background: none!important;
+    border: none;
+    padding: 0;
+    padding-right: 10px;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: gray;
+    cursor: pointer;
+}
