@@ -3,6 +3,13 @@ import DatePicker from 'react-datepicker';
 import { Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import MyEditor from './Editor';
+import { Multiselect } from 'multiselect-react-dropdown';
+
+const options = [
+    {name: 'Arrays', id: 1},
+    {name: 'HashTables', id: 2},
+    {name: 'Strings', id: 3}
+  ]
 
 export const LogProblem = () => {
     const [title, setTitle] = useState("")
@@ -10,7 +17,7 @@ export const LogProblem = () => {
     const [difficulty, setDifficulty] = useState("")
     const [topics, setTopics] = useState([])
     const [notes, setNotes] = useState("")
-    const [date, setDate] = useState("")
+    const [date, setDate] = useState(new Date())
     const [validated, setValidated] = useState(false);
 
     const onChangeTitle = event => {
@@ -26,8 +33,8 @@ export const LogProblem = () => {
     }
 
     const onChangeTopics = event => {
-      console.log(event.target.value)
-      setTopics(event.target.value)
+      const currTopics = event.map(item => item.name)
+      setTopics(currTopics)
     }
 
     const onChangeDate = date => {
@@ -35,7 +42,7 @@ export const LogProblem = () => {
     }
 
     const onChangeNotes = notes => {
-      console.log(notes.editorState.getCurrentContent().getPlainText('/u0001'))
+      setNotes(notes.editorState.getCurrentContent().getPlainText('/u0001'))
     }
 
     const handleSubmit = (event) => {
@@ -88,17 +95,17 @@ export const LogProblem = () => {
 
         <Form.Group controlId="formGridTopics">
           <Form.Label>Topics (doesn't quite work)</Form.Label>
-          <Form.Control as="select" multiple onChange={onChangeTopics}>
-            <option>Arrays</option>
-            <option>HashTables</option>
-            <option>Dynamic Programming</option>
-            <option>Strings</option>
-          </Form.Control>
+          <Multiselect
+            options={options} // Options to display in the dropdown
+            onSelect={onChangeTopics} // Function will trigger on select event
+            onRemove={onChangeTopics} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+          />
         </Form.Group>
 
         <Form.Group controlId="formGridDate">
           <Form.Label>Date &nbsp;</Form.Label>
-          <DatePicker onChange={onChangeDate} selected={new Date()}/>
+          <DatePicker onChange={onChangeDate} selected={date}/>
         </Form.Group>
         
         <Form.Group controlId='formGridNotes'>

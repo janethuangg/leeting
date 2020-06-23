@@ -1,5 +1,6 @@
 import React from 'react';
 import {Badge} from 'react-bootstrap'
+import 'tachyons';
 
 const Problem = ({number, title, difficulty, topics, notes, date}) => {
 

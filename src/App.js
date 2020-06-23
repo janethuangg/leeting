@@ -14,6 +14,8 @@ import Home from "./components/home";
 function App() {
  return (
   <Router>
+    <link rel="stylesheet" href="bootstrap-multiselect.css" type="text/css" />
+
    <div className="container">
      <Navbar />
       <br/>
