@@ -35,7 +35,7 @@ export const LogProblem = () => {
     }
 
     const onChangeNotes = notes => {
-      console.log(notes)
+      console.log(notes.editorState.getCurrentContent().getPlainText('/u0001'))
     }
 
     const handleSubmit = (event) => {

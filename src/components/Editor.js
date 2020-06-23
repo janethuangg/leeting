@@ -3,140 +3,131 @@ import '../css/Editor.css';
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 
 function keyBindingFunction(event) {
-  if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === 'x') {
-    return 'strikethrough';
-  }
+    if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === 'x') {
+        return 'strikethrough';
+    }
 
-  if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '7') {
-    return 'ordered-list';
-  }
+    if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '7') {
+        return 'ordered-list';
+    }
 
-  if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '8') {
-    return 'unordered-list';
-  }
+    if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '8') {
+        return 'unordered-list';
+    }
 
-  if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '9') {
-    return 'blockquote';
-  }
+    if (KeyBindingUtil.hasCommandModifier(event) && event.shiftKey && event.key === '9') {
+        return 'blockquote';
+    }
 
-  return getDefaultKeyBinding(event);
+    return getDefaultKeyBinding(event);
 }
 
 class MyEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      editorState: EditorState.createEmpty()
-    };
+    constructor(props) {
+        super(props);
 
-    this.onChange = this.onChange.bind(this);
-    this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
-    this.toggleBlockType = this.toggleBlockType.bind(this);
-  }
+        this.state = {
+            editorState: EditorState.createEmpty()
+        };
 
-  onChange (editorState) {
-    this.props.handleChange({editorState})
-    this.setState({editorState});
-  }
-
-  handleKeyCommand(command) {
-    // inline formatting key commands handles bold, italic, code, underline
-    var editorState = RichUtils.handleKeyCommand(this.state.editorState, command);
-
-    if (!editorState && command === 'strikethrough') {
-      editorState = RichUtils.toggleInlineStyle(this.state.editorState, 'STRIKETHROUGH');
+        this.onChange = this.onChange.bind(this);
+        this.handleKeyCommand = this.handleKeyCommand.bind(this);
+        this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     }
 
-    if (!editorState && command === 'blockquote') {
-      editorState = RichUtils.toggleBlockType(this.state.editorState, 'blockquote');
+    onChange (editorState) {
+        this.props.handleChange({editorState})
+        this.setState({editorState});
+        //console.log(this.state.editorState.getCurrentContent().getPlainText('/u0001'));
     }
 
-    if (!editorState && command === 'ordered-list') {
-      editorState = RichUtils.toggleBlockType(this.state.editorState, 'ordered-list-item');
+    handleKeyCommand(command) {
+        // inline formatting key commands handles bold, italic, code, underline
+        var editorState = RichUtils.handleKeyCommand(this.state.editorState, command);
+
+        if (!editorState && command === 'strikethrough') {
+            editorState = RichUtils.toggleInlineStyle(this.state.editorState, 'STRIKETHROUGH');
+        }
+
+        if (!editorState && command === 'blockquote') {
+            editorState = RichUtils.toggleBlockType(this.state.editorState, 'blockquote');
+        }
+
+        if (!editorState && command === 'ordered-list') {
+            editorState = RichUtils.toggleBlockType(this.state.editorState, 'ordered-list-item');
+        }
+
+        if (!editorState && command === 'unordered-list') {
+            editorState = RichUtils.toggleBlockType(this.state.editorState, 'unordered-list-item');
+        }
+
+        if (editorState) {
+            this.setState({editorState});
+            return 'handled';
+        }
+
+        return 'not-handled';
     }
 
-    if (!editorState && command === 'unordered-list') {
-      editorState = RichUtils.toggleBlockType(this.state.editorState, 'unordered-list-item');
+    toggleInlineStyle (event) {
+        event.preventDefault();
+
+        let style = event.currentTarget.getAttribute('data-style');
+        this.setState({
+            editorState: RichUtils.toggleInlineStyle(this.state.editorState, style)
+        });
     }
 
-    if (editorState) {
-      this.setState({editorState});
-      return 'handled';
+    renderInlineStyleButton(value, style) {
+        return (
+            <input
+            type="button"
+            className='fontStyle'
+            key={style}
+            value={value}
+            data-style={style}
+            onMouseDown={this.toggleInlineStyle}
+            />
+        );
     }
 
-    return 'not-handled';
-  }
+    render() {
+        const inlineStyleButtons = [
+            {
+                value: 'Bold',
+                style: 'BOLD'
+            },
 
-  toggleInlineStyle (event) {
-    event.preventDefault();
+            {
+                value: 'Italic',
+                style: 'ITALIC'
+            },
 
-    let style = event.currentTarget.getAttribute('data-style');
-    this.setState({
-      editorState: RichUtils.toggleInlineStyle(this.state.editorState, style)
-    });
-  }
+            {
+                value: 'Underline',
+                style: 'UNDERLINE'
+            },
+        ];
 
-  toggleBlockType (event) {
-    event.preventDefault();
+        return (
+            <div className="my-little-app">
+            <div className="inline-style-options">
+            {inlineStyleButtons.map((button) => {
+                return this.renderInlineStyleButton(button.value, button.style);
+            })}
+            </div>
 
-    let block = event.currentTarget.getAttribute('data-block');
-    this.setState({
-      editorState: RichUtils.toggleBlockType(this.state.editorState, block)
-    });
-  }
-
-  renderInlineStyleButton(value, style) {
-    return (
-      <input
-        type="button"
-        className='fontStyle'
-        key={style}
-        value={value}
-        data-style={style}
-        onMouseDown={this.toggleInlineStyle}
-      />
-    );
-  }
-
-  render() {
-    const inlineStyleButtons = [
-      {
-        value: 'Bold',
-        style: 'BOLD'
-      },
-
-      {
-        value: 'Italic',
-        style: 'ITALIC'
-      },
-
-      {
-        value: 'Underline',
-        style: 'UNDERLINE'
-      },
-     ];
-
-    return (
-      <div className="my-little-app">
-        <div className="inline-style-options">
-          {inlineStyleButtons.map((button) => {
-            return this.renderInlineStyleButton(button.value, button.style);
-          })}
-        </div>
-
-        <div className="draft-editor-wrapper">
-          <Editor
+            <div className="draft-editor-wrapper">
+            <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
             handleKeyCommand={this.handleKeyCommand}
             keyBindingFn={keyBindingFunction}
-          />
-        </div>
-      </div>
-    );
-  }
+            />
+            </div>
+            </div>
+        );
+    }
 }
 
 export default MyEditor;
