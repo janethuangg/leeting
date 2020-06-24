@@ -8,7 +8,8 @@ const problemSchema = new Schema({
   difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'] },
   topics: { type: [String] },
   notes: { type: String },
-  date: { type: Date, required: true }
+  date: { type: Date, required: true },
+  user_id: { type: String, required: true }
 }, {
   timestamps: true,
 });

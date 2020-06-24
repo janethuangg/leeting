@@ -1,19 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import ProblemList from './ProblemList';
 import axios from 'axios';
+import queryString from 'query-string';
+import firebase from '../firebase.js'
+
+const client_id = 'b93f969361e10dc65659'
+const client_secret = '22a4714781a68d3996fd09576a4548a98fac6a0e'
 
 const Home = (props) => {
-    const [problems, setProblems] = useState([])
-
+    const [user, setUser] = useState({})
+        
     useEffect(() => {
-        axios.get("http://localhost:5000/problems")
-            .then(res => setProblems(res.data)); 
-    },[])
-    
+        const currentUser = firebase.auth().currentUser;
+        if (currentUser){
+            console.log(currentUser)
+            setUser(currentUser)
+        }
+    }, [])
+
     return (
         <div className='tc'>
-        <h1>Problems</h1>
-        <ProblemList problems={problems}/>
+        <h1>Welcome {user.displayName}!</h1>
         </div>
     )
 }

@@ -1,9 +1,8 @@
 import React from 'react';
-import {Badge} from 'react-bootstrap'
-import { deleteProblem } from '../scripts/ProblemUI';
+import {Badge, Button} from 'react-bootstrap'
 import 'tachyons';
 
-const Problem = ({id, number, title, difficulty, topics, notes, date}) => {
+const Problem = ({id, number, title, difficulty, topics, notes, date, handleDelete}) => {
 
     return (
         <div id={id} className='tc dib br2 pa4 ma2 grow shadow-1'>
@@ -15,7 +14,7 @@ const Problem = ({id, number, title, difficulty, topics, notes, date}) => {
             <h5> {date.slice(0,10)} </h5>
             <h5> {topics} </h5>
             <p> {notes} </p>
-            <button onClick={ () => deleteProblem({id}) }>X</button>
+            <Button onClick={ () => handleDelete({id}) }>X</Button>
         </div>
         </div>
 
