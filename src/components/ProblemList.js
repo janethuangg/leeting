@@ -8,6 +8,7 @@ const ProblemList = ({problems}) => {
         problems.map((problem, i) => {
         return (
             <Problem
+            id={problems[i]._id}
             key={i}
             number={problems[i].number}
             title={problems[i].title}
