@@ -1,6 +1,7 @@
 import React from 'react';
 import {Badge} from 'react-bootstrap'
 import { deleteProblem } from '../scripts/ProblemUI';
+import 'tachyons';
 
 const Problem = ({id, number, title, difficulty, topics, notes, date}) => {
 
