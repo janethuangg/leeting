@@ -1,0 +1,43 @@
+body { 
+    background: #E5E5E5;
+}
+
+.card {
+    background: white;
+    width: 20vw; 
+    height: 15vw;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.card-title {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.card-date {
+    font-size: medium;
+    margin-bottom: 7px;
+    color: gray;
+}
+
+.card-button {
+    position:absolute;
+    top:0;
+    right:0;    
+    margin: 10px;
+    width: 1em;
+    height: 1.5em;
+}
+
+.badge {
+    vertical-align: text-bottom;
+    margin-left: 30px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

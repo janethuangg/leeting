@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "./css/DatePicker.css";
 import 'draft-js/dist/Draft.css';
+import "./css/style.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/navbar"
 import Problems from "./components/Problems";

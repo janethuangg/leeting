@@ -48,7 +48,11 @@ export const LogProblem = () => {
   };
 
   useEffect(() => {
-    const currentUser = firebase.auth().currentUser;
+    // const currentUser = firebase.auth().currentUser;
+    const currentUser = {
+      uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2"
+    }
+
     if (currentUser) {
       setUser(currentUser);
     }
