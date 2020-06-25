@@ -52,7 +52,7 @@ export const LogProblem = () => {
     if (currentUser) {
       setUser(currentUser);
     }
-  });
+  }, []);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
