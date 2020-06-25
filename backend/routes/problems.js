@@ -50,6 +50,18 @@ router.route("/:id").delete((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+// gets problems by difficulty
+router.route("/analytics/:diff").get((req, res) => {
+  Problem.find({ difficulty: req.params.diff })
+    .then((problems) => res.json(problems))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// Problem.find({ user_id: req.params.id })
+//     .then((problems) => res.json(problems))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
+
 // router.route('/update/:id').post((req, res) => {
 //   Exercise.findById(req.params.id)
 //     .then(exercise => {
