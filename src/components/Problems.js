@@ -12,8 +12,8 @@ const Problems = (props) => {
   useEffect(() => {
     // const currentUser = firebase.auth().currentUser;
     const currentUser = {
-      uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2"
-    }
+      uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2",
+    };
 
     if (currentUser) {
       setUser(currentUser);
@@ -35,22 +35,22 @@ const Problems = (props) => {
   };
 
   return (
-    <div className = 'container w-100'> 
-    <h1>Problems</h1>
-        <div className="card-container">
-          {problems.map((problem, i) => {
-            return (
-              <Problem
-                id={problems[i]._id}
-                key={i}
-                number={problems[i].number}
-                title={problems[i].title}
-                difficulty={problems[i].difficulty}
-                topics={problems[i].topics}
-                notes={problems[i].notes}
-                date={problems[i].date}
-                handleDelete={handleDelete}
-              />
+    <div className="container w-100">
+      <h1>Problems</h1>
+      <div className="card-container">
+        {problems.map((problem, i) => {
+          return (
+            <Problem
+              id={problems[i]._id}
+              key={i}
+              number={problems[i].number}
+              title={problems[i].title}
+              difficulty={problems[i].difficulty}
+              topics={problems[i].topics}
+              notes={problems[i].notes}
+              date={problems[i].date}
+              handleDelete={handleDelete}
+            />
           );
         })}
       </div>
