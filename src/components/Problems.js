@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Problem from "./Problem";
-import firebase from "../firebase.js";
+import { AuthContext } from "../auth.js";
 import { useHistory } from "react-router-dom";
 
 const Problems = (props) => {
   const [problems, setProblems] = useState([]);
-  const [user, setUser] = useState({});
+  const {currentUser} = useContext(AuthContext)
   const history = useHistory();
 
   useEffect(() => {
-    // const currentUser = firebase.auth().currentUser;
-    const currentUser = {
-      uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2",
-    };
-
     if (currentUser) {
-      setUser(currentUser);
-
       axios
         .get(`http://localhost:5000/problems/user/${currentUser.uid}`)
         .then((res) => setProblems(res.data));

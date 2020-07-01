@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
 import axios from "axios";
 import MyEditor from "./Editor";
 import { Multiselect } from "multiselect-react-dropdown";
 import firebase from "../firebase.js";
+import { AuthContext } from "../auth.js";
+import { useHistory } from "react-router-dom";
 
 const options = [
   { name: "Arrays", id: 1 },
@@ -20,7 +22,8 @@ export const LogProblem = () => {
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(new Date());
   const [validated, setValidated] = useState(false);
-  const [user, setUser] = useState({});
+  const {currentUser} = useContext(AuthContext);
+  const history = useHistory();
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -48,13 +51,8 @@ export const LogProblem = () => {
   };
 
   useEffect(() => {
-    // const currentUser = firebase.auth().currentUser;
-    const currentUser = {
-      uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2"
-    }
-
-    if (currentUser) {
-      setUser(currentUser);
+    if (!currentUser) {
+      history.push("/signup");
     }
   }, []);
 
@@ -66,7 +64,7 @@ export const LogProblem = () => {
     }
 
     setValidated(true);
-
+    console.log(currentUser.uid)
     const problem = {
       title: title,
       number: number,
@@ -74,7 +72,7 @@ export const LogProblem = () => {
       topics: topics,
       notes: notes,
       date: date,
-      user_id: user.uid,
+      user_id: currentUser.uid,
     };
 
     axios

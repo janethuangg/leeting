@@ -7,44 +7,33 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Problems from "./components/Problems";
 import Analytics from "./components/Analytics";
+import { Container } from "react-bootstrap";
 
 import React, { useState, useEffect } from "react";
 // import EditExercise from "./components/edit-exercise.component";
-import LogProblem from "./components/log-problem";
-import SignUp from "./components/signup";
-import Home from "./components/home";
+import LogProblem from "./components/LogProblem";
+import SignUp from "./components/Signup";
+import Home from "./components/Home";
 import Calendar from "./components/Calendar";
 import firebase from "./firebase";
+import { AuthProvider } from "./auth";
 
 function App() {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    console.log("app use effect");
-    const currentUser = firebase.auth().currentUser;
-    console.log(currentUser);
-    // const currentUser = {
-    //   uid: "2FWlZ47LDNYdthWMdUdmh0xNNCx2"
-    // }
-    if (currentUser) {
-      setUser(currentUser);
-    }
-  }, []);
-
   return (
-    <Router>
-      <div className="container">
-        <Navigation user={user} />
-        <br />
-        <Route path="/" exact component={Home} />
-        <Route path="/problems" exact component={Problems} />
-        {/* <Route path="/edit/:id" component={EditExercise} /> */}
-        <Route path="/log-problem" component={LogProblem} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/analytics" component={Analytics} />
-        <Route path="/calendar" component={Calendar} />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navigation />
+        <Container style={{ marginTop: 100 }}>
+          <Route path="/" exact component={Home} />
+          <Route path="/problems" exact component={Problems} />
+          {/* <Route path="/edit/:id" component={EditExercise} /> */}
+          <Route path="/log-problem" component={LogProblem} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/analytics" component={Analytics} />
+          <Route path="/calendar" component={Calendar} />
+        </Container>
+      </Router>
+    </AuthProvider>
   );
 }
 
