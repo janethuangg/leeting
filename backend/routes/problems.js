@@ -51,8 +51,8 @@ router.route("/:id").delete((req, res) => {
 });
 
 // gets problems by difficulty
-router.route("/analytics/:diff").get((req, res) => {
-  Problem.find({ difficulty: req.params.diff })
+router.route("/analytics/:uid/:diff").get((req, res) => {
+  Problem.find({ difficulty: req.params.diff, user_id: req.params.uid })
     .then((problems) => res.json(problems))
     .catch((err) => res.status(400).json("Error: " + err));
 });
